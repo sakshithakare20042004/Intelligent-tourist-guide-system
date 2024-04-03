@@ -1,0 +1,72 @@
+<!doctype html>
+
+<head>
+<title>How to Create a Currency Converter in JavaScript</title>
+
+
+
+</head>
+<body>
+   <style>
+    
+      body{
+          background-image: url('https://images.pexels.com/photos/7538294/pexels-photo-7538294.jpeg?cs=srgb&dl=pexels-nothing-ahead-7538294.jpg&fm=jpg&_gl=1*gttfv9*_ga*MTA2NzUyMDMyOS4xNjY0MzgwNDYz*_ga_8JE65Q40S6*MTY2NzUyNjIzNy4zLjEuMTY2NzUyNjI5OS4wLjAuMA..');
+      background-repeat: no-repeat;
+      background-size: 100% 700%;} 
+  </style>
+    <centre>
+
+   <h1>Currency Converter</h1>
+
+
+   <h3> Select Currency and enter Amount to convert.</h3>
+   <h4>
+   <form>
+    
+
+      <label>From:</label>
+      
+      <select id="from">
+         <option value="USD">USD</option>
+         <option value="EUR">EUR</option>
+         <option value="GBP">GBP</option>
+         <option value="INR">INR</option>
+      </select>
+      <label>To:</label>
+      <select id="to">
+         <option value="USD">USD</option>
+         <option value="EUR">EUR</option>
+         <option value="GBP">GBP</option>
+         <option value="INR">INR</option>
+      </select>
+      <label>Amount:</label>
+      <input type="text" id="amount" />
+      <button type="button" id="convert">Convert</button>
+      <p id="result"></p>
+   </form>
+</h4>
+   <script>
+      const convert = document.getElementById("convert");
+      const result = document.getElementById("result");
+      const from = document.getElementById("from");
+      const to = document.getElementById("to");
+      const amount = document.getElementById("amount");
+      convert.addEventListener("click", function() {
+         let fromCurrency = from.value;
+         let toCurrency = to.value;
+         let amt = amount.value;
+         fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`)
+         .then(response => {
+               return response.json();
+         })
+         .then(data => {
+            let rate = data.rates[toCurrency];
+            let total = rate * amt;
+            result.innerHTML = `${amt} ${fromCurrency} = ${total}
+            ${toCurrency}`;
+         });
+      });
+   </script>
+   </centre>
+</body>
+</html>
